@@ -1,6 +1,12 @@
-
+const hubGeoLocations = [
+  {
+    id: 1
+  }
+]
 
 const getDistanceFromHub = async () => {
+
+  
 
   return 40;
 

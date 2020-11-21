@@ -2,6 +2,7 @@ const express = require("express")
 const { basicAuthDecode } = require("../util/basicauth")
 const accountsAPI = require("./accounts")
 const productsAPI = require("./products")
+const ordersAPI = require("./orders")
 
 const router = express.Router()
 
@@ -41,6 +42,7 @@ const handleRequest = async (req, res, callback) => {
 
 
 router.post('/account', (req, res) => accountsAPI.createAccount(req, res))
+router.post('/order', (req, res) => ordersAPI.createOrder(req, res))
 
 router.get('/products', (req, res) => handleRequest(req, res, () => productsAPI.getProducts(req, res)))
 

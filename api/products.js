@@ -1,3 +1,4 @@
+const { Db } = require("mongodb")
 const Shopify = require("shopify-api-node")
 const geo = require("../geo/geo")
 
@@ -9,43 +10,43 @@ const shopify = new Shopify({
 
 const getProducts = async (req, res) => {
 
+  const db = process.mongoClient.db
+
   let products = []
 
   const allProducts = await shopify.product.list()
 
   for(const product of allProducts){
 
-    const { hubID } = JSON.parse(product.body_html)
+    const details = JSON.parse(product.body_html)
+
+    const { hubID } = details
     const distance = await geo.getDistanceFromHub(hubID, req.custom.username)
 
     if(distance < process.global.maxDistanceFromHub){
 
-      products.push(product)
-    }
+      const { description, farmerID, unit } = details
 
-  }
+      const [ farmerDetails ] = await db.collection("farmers").find({ farmerID }).toArray()
 
-  products = products.map(p => {
-
-      const { description, farmerDetails, unit } = JSON.parse(p.body_html)
-
-      return {
-        id: p.id,
-        title: p.title,
+      products.push({
+        id: String(product.id),
+        title: product.title,
         description,
         ecoScore: {
-          distance: 12,
-          ranking: 88,
-          co2: 22.4
+          distance: parseFloat(12),
+          ranking: parseFloat(88),
+          co2: parseFloat(22.4)
         },
-        price: p.price,
-        quantity: p.variants[0].quantity,
+        price: product.price,
+        quantity: product.variants[0].quantity,
         unit,
         farmerDetails,
-        images: p.images.map(i => i.src),
+        images: product.images.map(i => i.src),
         category: "Obst"
-      }
-    })
+      })
+    }
+  }
 
   res.json({ products })
 }

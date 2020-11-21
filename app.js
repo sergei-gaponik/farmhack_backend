@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 process.global = {
-  maxDistanceFromHub: 80
+	maxDistanceFromHub: 80
 }
 
 const express = require('express')
