@@ -1,11 +1,4 @@
-const Shopify = require("shopify-api-node")
 const sha512 = require("../util/sha512")
-
-const shopify = new Shopify({
-  shopName: process.env.SHOPIFY_SHOPNAME,
-  apiKey: process.env.SHOPIFY_API_KEY,
-  password: process.env.SHOPIFY_API_SECRET
-})
 
 const createAccount = async (req, res) => {
 
