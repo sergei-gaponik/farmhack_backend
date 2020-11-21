@@ -15,7 +15,9 @@ const getProducts = async (req, res) => {
 
   for(const product of allProducts){
 
-    const { hubID } = JSON.parse(product.description)
+    console.log(product.id)
+
+    const { hubID } = JSON.parse(product.body_html)
     const distance = await geo.getDistanceFromHub(hubID, req.custom.username)
 
     if(distance < process.global.maxDistanceFromHub){
@@ -25,9 +27,9 @@ const getProducts = async (req, res) => {
 
   }
 
-  products.map(p => {
+  products = products.map(p => {
 
-      const { description, farmerDetails, unit } = JSON.parse(p.description)
+      const { description, farmerDetails, unit } = JSON.parse(p.body_html)
 
       return {
         id: p.id,

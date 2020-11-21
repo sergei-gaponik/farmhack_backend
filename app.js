@@ -1,5 +1,9 @@
 require('dotenv').config()
 
+process.global = {
+  maxDistanceFromHub: 80
+}
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const { MongoClient } = require("mongodb")
