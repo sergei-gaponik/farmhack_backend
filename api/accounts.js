@@ -68,7 +68,7 @@ const signIn = async (req, res) => {
     password
   } = req.body
 
-  const [ account = null ] = db.collection("accounts").find({ username }).toArray()
+  const [ account = null ] = await db.collection("accounts").find({ username }).toArray()
 
   if(!account){
     res.json({ status: "failure" })
