@@ -12,7 +12,7 @@ const getEcoScore = async (farmerID, hubID) => {
   const co2PerKm = 128.1
 
   const distance = await geo.getDistanceFromHubToFarmer(farmerID, hubID)
-  const co2 = distance * co2PerKm
+  const co2 = parseInt(distance * co2PerKm)
   const ranking = parseInt(Math.max(1 - (co2 / 18000), 0) * 100)
 
   return { 
