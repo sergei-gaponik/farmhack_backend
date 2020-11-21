@@ -36,9 +36,7 @@ const getProducts = async (req, res) => {
 
     const { hubID } = details
 
-    console.log(hubID,  req.custom.username)
-
-    const distance = 30//await geo.getDistanceFromHubToUser(hubID, req.custom.username)
+    const distance = await geo.getDistanceFromHubToUser(req.custom.username, hubID)
 
     if(distance < process.global.maxDistanceFromHub){
 
