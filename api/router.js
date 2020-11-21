@@ -5,16 +5,11 @@ const productsAPI = require("./products")
 
 const router = express.Router()
 
-const verifyRequest = async authorization => {
-
-  if(!authorization) return false
+const verifyRequest = async (username, passwordHash) => {
 
   const db = process.mongoClient.db
-  const [ username = null, password = null ] = basicAuthDecode(authorization)
 
-  if(!username || !password) return false
-
-  const [ account = null ] = await db.collection("accounts").find({ username, password }).toArray()
+  const [ account = null ] = await db.collection("accounts").find({ username, passwordHash }).toArray()
 
   return account ? true : false
 }
@@ -22,7 +17,14 @@ const verifyRequest = async authorization => {
 const handleRequest = async (req, res, callback) => {
 
   const { authorization = null } = req.headers
-  const authResponse = await verifyRequest(authorization)
+
+  if(!authorization) return;
+
+  const [ username = null, passwordHash = null ] = basicAuthDecode(authorization)
+
+  if(!username || !passwordHash) return;
+
+  const authResponse = await verifyRequest(username, passwordHash)
 
   if(!authResponse){
     console.log("auth failed")
@@ -31,6 +33,8 @@ const handleRequest = async (req, res, callback) => {
   }
 
   console.log("auth success")
+
+  req.custom.username = username
   
   callback(req, res)
 }

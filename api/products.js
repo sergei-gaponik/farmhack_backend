@@ -1,4 +1,5 @@
 const Shopify = require("shopify-api-node")
+const geo = require("../geo/geo")
 
 const shopify = new Shopify({
   shopName: process.env.SHOPIFY_SHOPNAME,
@@ -8,12 +9,23 @@ const shopify = new Shopify({
 
 const getProducts = async (req, res) => {
 
-  const location = req.body.location
+  let products = []
 
   const allProducts = await shopify.product.list()
-  const products = allProducts
-    .filter(p => p.tags.includes(location))
-    .map(p => {
+
+  for(const product of allProducts){
+
+    const { hubID } = JSON.parse(product.description)
+    const distance = await geo.getDistanceFromHub(hubID, req.custom.username)
+
+    if(distance < process.global.maxDistanceFromHub){
+
+      products.push(product)
+    }
+
+  }
+
+  products.map(p => {
 
       const { description, farmerDetails, unit } = JSON.parse(p.description)
 

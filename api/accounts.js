@@ -46,7 +46,7 @@ const createAccount = async (req, res) => {
 
   await db.collection("accounts").insertOne({
     username, 
-    password: sha512.passwordHash(password),
+    passwordHash: sha512.passwordHash(password),
     address,
     firstName,
     lastName
