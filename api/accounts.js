@@ -77,6 +77,7 @@ const signIn = async (req, res) => {
 
   if(!account){
     res.json({ status: "failure" })
+    return;
   }
 
   if(sha512.passwordVerify(account.passwordHash, password)){
@@ -85,7 +86,7 @@ const signIn = async (req, res) => {
       status: "success",
       passwordHash: account.passwordHash
     })
-
+    return;
   }
 
   res.json({ status: "failure" })
