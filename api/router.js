@@ -43,6 +43,7 @@ const handleRequest = async (req, res, callback) => {
 
 
 router.post('/account', (req, res) => accountsAPI.createAccount(req, res))
+router.post('/login', (req, res) => accountsAPI.signIn(req, res))
 
 router.get('/loading', (req, res) => handleRequest(req, res, () => geoAPI.getLoadingScreenImage(req, res)))
 router.post('/order', (req, res) => handleRequest(req, res, () => ordersAPI.createOrder(req, res)))

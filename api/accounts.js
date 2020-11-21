@@ -58,4 +58,33 @@ const createAccount = async (req, res) => {
   res.json({ status: "success" })
 }
 
+const signIn = async (req, res) => {
+
+  const db = process.mongoClient.db
+
+  const {
+    username,
+    password
+  } = req.body
+
+  const [ account = null ] = db.collection("accounts").find({ username }).toArray()
+
+  if(!account){
+    res.json({ status: "failure" })
+  }
+
+  if(sha512.passwordVerify(account.passwordHash, password)){
+
+    res.json({
+      status: "success",
+      passwordHash: account.passwordHash
+    })
+
+  }
+
+  res.json({ status: "failure" })
+
+}
+
 module.exports.createAccount = createAccount
+module.exports.signIn = signIn
