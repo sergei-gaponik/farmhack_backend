@@ -35,11 +35,14 @@ const getProducts = async (req, res) => {
     const details = JSON.parse(product.body_html)
 
     const { hubID } = details
+
+    console.log(hubID)
+
     const distance = await geo.getDistanceFromHubToUser(hubID, req.custom.username)
 
     if(distance < process.global.maxDistanceFromHub){
 
-      const { description, farmerID, hubID, unit } = details
+      const { description, farmerID, unit } = details
 
       const [ farmerDetails ] = await db.collection("farmers").find({ farmerID }).toArray()
 
