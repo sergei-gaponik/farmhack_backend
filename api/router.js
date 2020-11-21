@@ -3,6 +3,7 @@ const { basicAuthDecode } = require("../util/basicauth")
 const accountsAPI = require("./accounts")
 const productsAPI = require("./products")
 const ordersAPI = require("./orders")
+const geoAPI = require("./geo")
 
 const router = express.Router()
 
@@ -42,9 +43,10 @@ const handleRequest = async (req, res, callback) => {
 
 
 router.post('/account', (req, res) => accountsAPI.createAccount(req, res))
-router.post('/order', (req, res) => ordersAPI.createOrder(req, res))
 
+router.get('/loading', (req, res) => handleRequest(req, res, () => geoAPI.getLoadingScreenImage(req, res)))
+router.post('/order', (req, res) => handleRequest(req, res, () => ordersAPI.createOrder(req, res)))
 router.get('/products', (req, res) => handleRequest(req, res, () => productsAPI.getProducts(req, res)))
-
+router.post('/location', (req, res) => handleRequest(req, res, () => geoAPI.getUserLocation(req, res)))
 
 module.exports = router;
