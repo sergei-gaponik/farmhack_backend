@@ -1,4 +1,5 @@
 const sha512 = require("../util/sha512")
+const geo = require("../geo/geo")
 
 const createAccount = async (req, res) => {
 
@@ -37,7 +38,7 @@ const createAccount = async (req, res) => {
     return;
   }
 
-  const locationResponse = await getLocationFromAddress(address)
+  const locationResponse = await geo.getLocationFromAddress(address)
 
   if(locationResponse.status != "success"){
     res.json(locationResponse)
