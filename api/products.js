@@ -38,7 +38,7 @@ const getProducts = async (req, res) => {
           ranking: parseFloat(88),
           co2: parseFloat(22.4)
         },
-        price: product.price,
+        price: parseFloat(product.variants[0].price),
         quantity: product.variants[0].quantity,
         unit,
         farmerDetails,
