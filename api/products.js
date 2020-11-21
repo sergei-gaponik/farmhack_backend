@@ -44,7 +44,7 @@ const getProducts = async (req, res) => {
 
       const [ farmerDetails ] = await db.collection("farmers").find({ farmerID }).toArray()
 
-      const ecoScore = getEcoScore(farmerID, hubID)
+      const ecoScore = await getEcoScore(farmerID, hubID)
 
       products.push({
         id: String(product.id),
