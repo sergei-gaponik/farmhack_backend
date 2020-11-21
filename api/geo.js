@@ -14,7 +14,7 @@ const getLoadingScreenImage = async (req, res) => {
 
   const [ account ] = await db.collection("accounts").find({ username }).toArray()
 
-  const response = await getMapSnapshot(account.location)
+  const response = await geo.getMapSnapshot(account.location)
 
   return response
 }
