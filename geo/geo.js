@@ -65,7 +65,7 @@ const getDistanceFromHubToUser = async (username, hubID) => {
 
   const db = process.mongoClient.db
 
-  const [ account ] = db.collection("accounts").find({ username }).toArray()
+  const [ account ] = await db.collection("accounts").find({ username }).toArray()
   const [ hub ] = await db.collection("hubs").find({ hubID }).toArray()
 
   return parseFloat(geolib.getDistance(account.location, hub.location) / 1000)
