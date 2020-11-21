@@ -47,16 +47,21 @@ const createAccount = async (req, res) => {
 
   const { location } = locationResponse
 
+  const passwordHash = sha512.passwordHash(password)
+
   await db.collection("accounts").insertOne({
     username, 
-    passwordHash: sha512.passwordHash(password),
+    passwordHash,
     address,
     firstName,
     lastName,
     location
   })
 
-  res.json({ status: "success" })
+  res.json({ 
+    status: "success",
+    passwordHash
+  })
 }
 
 const signIn = async (req, res) => {
