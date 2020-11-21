@@ -44,12 +44,22 @@ const createAccount = async (req, res) => {
     return;
   }
 
+  const locationResponse = await getLocationFromAddress(address)
+
+  if(locationResponse.status != "success"){
+    res.json(locationResponse)
+    return;
+  }
+
+  const { location } = locationResponse
+
   await db.collection("accounts").insertOne({
     username, 
     passwordHash: sha512.passwordHash(password),
     address,
     firstName,
-    lastName
+    lastName,
+    location
   })
 
   res.json({ status: "success" })
