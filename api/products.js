@@ -15,8 +15,6 @@ const getProducts = async (req, res) => {
 
   for(const product of allProducts){
 
-    console.log(product.id)
-
     const { hubID } = JSON.parse(product.body_html)
     const distance = await geo.getDistanceFromHub(hubID, req.custom.username)
 
@@ -43,7 +41,9 @@ const getProducts = async (req, res) => {
         price: p.price,
         quantity: p.variants[0].quantity,
         unit,
-        farmerDetails
+        farmerDetails,
+        images: p.images.map(i => i.src),
+        category: "Obst"
       }
     })
 
