@@ -34,7 +34,7 @@ const handleRequest = async (req, res, callback) => {
 
   console.log("auth success")
 
-  req.custom.username = username
+  req.custom = { username }
   
   callback(req, res)
 }
@@ -42,7 +42,7 @@ const handleRequest = async (req, res, callback) => {
 
 router.post('/account', (req, res) => accountsAPI.createAccount(req, res))
 
-router.post('/products', (req, res) => handleRequest(req, res, () => productsAPI.getProducts(req, res)))
+router.get('/products', (req, res) => handleRequest(req, res, () => productsAPI.getProducts(req, res)))
 
 
 module.exports = router;
