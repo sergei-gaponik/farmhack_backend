@@ -71,7 +71,9 @@ const signIn = async (req, res) => {
   const {
     username,
     password
-  } = req.body
+  } = JSON.parse(req.body)
+  
+  console.log(username)
 
   const [ account = null ] = await db.collection("accounts").find({ username }).toArray()
 
