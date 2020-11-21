@@ -16,7 +16,7 @@ const getEcoScore = async (farmerID, hubID) => {
   const ranking = parseInt(Math.max(1 - (co2 / 18000), 0) * 100)
 
   return { 
-    distance, 
+    distance: parseInt(distance), 
     co2, 
     ranking 
   }
