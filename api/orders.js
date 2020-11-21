@@ -11,10 +11,11 @@ const createOrder = async (req, res) => {
   try{
 
     const {
-      username,
       items,
       paymentMethod
     } = req.body
+
+    const username = req.custom.username
 
     const products = await shopify.product.list()
 
