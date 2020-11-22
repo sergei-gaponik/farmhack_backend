@@ -16,7 +16,7 @@ const getLoadingScreenImage = async (req, res) => {
 
   const response = await geo.getMapSnapshot(account.location)
 
-  res.json(response)
+  setTimeout(() => res.json(response), 1000)
 }
 
 module.exports.getLoadingScreenImage = getLoadingScreenImage
