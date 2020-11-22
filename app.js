@@ -4,6 +4,8 @@ process.global = {
 	maxDistanceFromHub: 80
 }
 
+console.log(1)
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const { MongoClient } = require("mongodb")
