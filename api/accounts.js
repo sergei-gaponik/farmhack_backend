@@ -46,10 +46,7 @@ const createAccount = async (req, res) => {
   }
 
   const { location } = locationResponse
-
-
-  const { mapSnapshot } = geo.getMapSnapshot(location)
-
+  const { mapSnapshot } = await geo.getMapSnapshot(location)
   const passwordHash = sha512.passwordHash(password)
 
   await db.collection("accounts").insertOne({
