@@ -9,9 +9,10 @@ const shopify = new Shopify({
 
 const getEcoScore = async (farmerID, hubID) => {
 
-  const co2PerKm = 128.1
+  const db = process.mongoClient.db 
 
   const distance = await geo.getDistanceFromHubToFarmer(farmerID, hubID)
+  const [{ co2PerKm }] = await db.collection("farmers").find({ farmerID }).toArray()
   const co2 = parseInt(distance * co2PerKm)
   const ranking = parseInt(Math.max(1 - (co2 / 18000), 0) * 100)
 
