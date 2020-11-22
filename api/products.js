@@ -62,7 +62,7 @@ const getProducts = async (req, res) => {
     }
   }
 
-  res.json({ products })
+  setTimeout(() => res.json({ products }), 1000)
 }
 
 module.exports.test = async () => {
