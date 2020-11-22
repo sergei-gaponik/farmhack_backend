@@ -11,7 +11,7 @@ const createAccount = async (req, res) => {
     address = null,
     firstName = null,
     lastName = null
-  } = req.body
+  } = JSON.parse(req.body)
 
   const accounts = await db.collection("accounts").find().toArray()
 

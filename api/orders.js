@@ -13,7 +13,7 @@ const createOrder = async (req, res) => {
     const {
       items,
       paymentMethod
-    } = req.body
+    } = JSON.parse(req.body)
 
     const username = req.custom.username
 
