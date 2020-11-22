@@ -14,11 +14,11 @@ const getMapSnapshot = async location => {
   
   const fileName = `maps_${Date.now().toString(36)}.png`
 
-  await fs.promises.writeFile(path.join(__dirname, `../assets/public/maps${fileName}`), buffer)
+  await fs.promises.writeFile(path.join(__dirname, `../assets/public/maps/${fileName}`), buffer)
 
   return {
     status: "success",
-    imageURL: `http://h2876877.stratoserver.net/assets/maps${fileName}`
+    imageURL: `http://h2876877.stratoserver.net/assets/maps/${fileName}`
   }
 }
 
