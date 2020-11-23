@@ -10,10 +10,7 @@ const createOrder = async (req, res) => {
 
   try{
 
-    const {
-      items,
-      paymentMethod
-    } = JSON.parse(req.body)
+    const { items } = JSON.parse(req.body)
 
     const username = req.custom.username
 
@@ -24,8 +21,7 @@ const createOrder = async (req, res) => {
         variant_id: products.find(p => p.id == i.id).variants[0].id,
         quantity: i.quantity
       })),
-      email: username,
-      "payment_gateway_names": [ paymentMethod ]
+      email: username
     }
 
     await shopify.order.create(body)
