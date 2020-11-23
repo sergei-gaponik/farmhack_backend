@@ -44,6 +44,7 @@ const createOrder = async (req, res) => {
     
     if(data.errors){
       res.json({ status: "failure" })
+      return;
     }
 
     res.json({ status: "success" })
