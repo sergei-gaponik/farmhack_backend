@@ -42,7 +42,9 @@ const createOrder = async (req, res) => {
     })
     const data = await res.json()
     
-    console.log(data)
+    if(data.errors){
+      res.json({ status: "failure" })
+    }
 
     res.json({ status: "success" })
   }
