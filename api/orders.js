@@ -33,14 +33,14 @@ const createOrder = async (req, res) => {
 
     const url = `https://${key}:${secret}@bauernebenan14.myshopify.com/admin/api/2020-10/orders.json`
 
-    const res = await fetch(url, { 
+    const response = await fetch(url, { 
       method: "post",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
     })
-    const data = await res.json()
+    const data = await response.json()
     
     if(data.errors){
       res.json({ status: "failure" })
