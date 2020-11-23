@@ -38,6 +38,8 @@ const handleRequest = async (req, res, callback) => {
 
   req.custom = { username }
   
+  console.log({req})
+
   callback(req, res)
 }
 
