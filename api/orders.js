@@ -1,5 +1,7 @@
 const Shopify = require("shopify-api-node")
 
+const fetch = require("node-fetch")
+
 const shopify = new Shopify({
   shopName: process.env.SHOPIFY_SHOPNAME,
   apiKey: process.env.SHOPIFY_API_KEY,
@@ -26,9 +28,21 @@ const createOrder = async (req, res) => {
       }
     }
 
-    await shopify.order.create(body)
+    const key = process.env.SHOPIFY_API_KEY
+    const secret = process.env.SHOPIFY_API_SECRET
 
-    console.log(body)
+    const url = `https://${key}:${secret}@bauernebenan14.myshopify.com/admin/api/2020-10/orders.json`
+
+    const res = await fetch(url, { 
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+    const data = await res.json()
+    
+    console.log(data)
 
     res.json({ status: "success" })
   }
@@ -38,4 +52,18 @@ const createOrder = async (req, res) => {
   }
 }
 
+module.exports.test = () => {
+
+  createOrder({body: JSON.stringify({
+      "items": [
+        {
+          id: "6095532327094",
+          quantity: 1
+        }
+      ]
+  })}, {})
+
+}
+
 module.exports.createOrder = createOrder
+
