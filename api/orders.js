@@ -12,11 +12,15 @@ const createOrder = async (req, res) => {
 
   try{
 
+    const db = process.mongoClient.db
+
     const { items } = JSON.parse(req.body)
 
     const username = req.custom.username
 
     const products = await shopify.product.list()
+
+    const [{ address }] = await db.collection("accounts").find({ username }).toArray()
 
     const body = {
       order: {
@@ -24,7 +28,10 @@ const createOrder = async (req, res) => {
           variant_id: products.find(p => p.id == i.id).variants[0].id,
           quantity: i.quantity
         })),
-        email: username
+        email: username,
+        shipping_address: {
+          address1: address
+        }
       }
     }
 
