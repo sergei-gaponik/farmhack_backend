@@ -22,6 +22,8 @@ const createOrder = async (req, res) => {
 
     const [{ address }] = await db.collection("accounts").find({ username }).toArray()
 
+    console.log(address)
+
     const body = {
       order: {
         line_items: items.map(i => ({
@@ -49,7 +51,6 @@ const createOrder = async (req, res) => {
     })
     const data = await response.json()
 
-    console.log({data})
     
     if(data.errors){
       res.json({ status: "failure" })
