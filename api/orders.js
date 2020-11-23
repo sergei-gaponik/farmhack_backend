@@ -17,11 +17,13 @@ const createOrder = async (req, res) => {
     const products = await shopify.product.list()
 
     const body = {
-      line_items: items.map(i => ({
-        variant_id: products.find(p => p.id == i.id).variants[0].id,
-        quantity: i.quantity
-      })),
-      email: username
+      order: {
+        line_items: items.map(i => ({
+          variant_id: products.find(p => p.id == i.id).variants[0].id,
+          quantity: i.quantity
+        })),
+        email: username
+      }
     }
 
     await shopify.order.create(body)
